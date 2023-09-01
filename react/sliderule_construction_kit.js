@@ -2218,6 +2218,7 @@ var Glass = function (options) {
 };
 
 var Sliderule = function (length, options) {
+  this . enableCursor = true;
   this . inactive = false;
   this . length = length;
   this . left_margin = 0.2; this . right_margin = 0.2;
@@ -2264,7 +2265,7 @@ var Sliderule = function (length, options) {
   	if (this . mover != null) return {rule: this . mover, delta: this . mover . move (delta . x, this . length)};
     if (position . y < 0 || position . y > this . height ()) return null;
     var offset = position . x / this . length - this . left_margin - this . cursor_position;
-    if (offset >= - this . cursor_left_extension && offset <= this . cursor_right_extension) {
+    if (this.enableCursor && offset >= - this . cursor_left_extension && offset <= this . cursor_right_extension) {
     	this . mover = 'cursor';
     	return {rule: this, delta: this . moveCursor (delta . x)};
     }
@@ -2314,16 +2315,18 @@ var Sliderule = function (length, options) {
     // CURSOR GLASS BRACES
     for (ind in this . cursorGlassBraces) {ctx . save (); this . cursorGlassBraces [ind] . draw (ctx, this); ctx . restore ();}
     // CURSOR
-    ctx . beginPath ();
-    var le = - this . length * this . cursor_left_extension; var re = this . length * this . cursor_right_extension;
-    roundRect (ctx, le, le, - this . cursor_rounding - this . cursor_top_margin, re, re, this . height () + this . cursor_rounding + this . cursor_bottom_margin, this . cursor_rounding);
-    if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
-    if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
-    if (this . cursorHairline) {
+    if (this . enableCursor) {
       ctx . beginPath ();
-      ctx . moveTo (0, - this . hairline_top); ctx . lineTo (0, this . height () + this . hairline_bottom);
-      ctx . strokeStyle = this . cursorHairline;
-      ctx . stroke ();
+      var le = - this . length * this . cursor_left_extension; var re = this . length * this . cursor_right_extension;
+      roundRect (ctx, le, le, - this . cursor_rounding - this . cursor_top_margin, re, re, this . height () + this . cursor_rounding + this . cursor_bottom_margin, this . cursor_rounding);
+      if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
+      if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
+      if (this . cursorHairline) {
+        ctx . beginPath ();
+        ctx . moveTo (0, - this . hairline_top); ctx . lineTo (0, this . height () + this . hairline_bottom);
+        ctx . strokeStyle = this . cursorHairline;
+        ctx . stroke ();
+      }
     }
     // GLASSES
     for (ind in this . glasses) this . glasses [ind] . draw (ctx, this);
