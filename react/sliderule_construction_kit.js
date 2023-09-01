@@ -2473,7 +2473,7 @@ var Sliderule = function (length, options) {
 
 var Sliderules = function (options) {
   this . requireRedraw = true;
-  this . position = {x: 32.5, y: 32.5};
+  this . position = {x: 0, y: 0};
   this . scale = 1; this . scaling_factor = Math . pow (2, 1 / 12);
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];

@@ -216,7 +216,13 @@ rootRootDiv . appendChild (slideruleCanvas);
 var ctx = slideruleCanvas . getContext ('2d');
 
 var previous_width = 0, previous_height = 0;
+var first = true;
 var drawSliderule = function () {
+	if (first)
+		first = false;
+	else
+		return;
+
 	var width = window . innerWidth, height = window . innerHeight;
 	var bound = slideruleCanvas . getBoundingClientRect ();
 	var new_width = width - bound . left * 4, new_height = height - bound . top * 1.5;
@@ -234,12 +240,21 @@ var drawSliderule = function () {
 		return;
 	}
 	sliderules . checkRequired = true;
-	ctx . save ();
-	sliderules . draw (ctx, new_width, new_height);
-	ctx . restore ();
-	ctx . fillStyle = copyright_colour;
-	ctx . textAlign = 'right';
-	ctx . fillText (copyright, new_width - 4, new_height - 4);
+
+	ctx.clearRect(0, 0, new_width, new_height) ;
+	var c2s = new C2S(new_width, new_height);
+	var svg = document.getElementById("svg-root");
+
+	if (svg.children.length > 0) {
+		svg.removeChild(svg.children[0]);
+	}
+
+	console.log('starting');
+	sliderules.draw(c2s, new_width, new_height);
+	sliderules.draw(ctx, new_width, new_height);
+	console.log('done');
+
+	svg.appendChild(c2s.getSvg());
 };
 
 setInterval (drawSliderule, 20);
