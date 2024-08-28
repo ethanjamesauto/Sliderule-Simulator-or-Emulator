@@ -1489,8 +1489,10 @@ var Rule = function (options) {
       ctx . lineWidth = 1;
       var region = new Path2D ();
       roundRect (region, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleRealHeight (), this . rounding);
-      ctx . fill (region); ctx . strokeStyle = this . border_colour; ctx . stroke (region);
-      ctx . clip (region);
+      //ctx . closePath ();
+      //ctx . fill (region); ctx . strokeStyle = this . border_colour; 
+      ctx . stroke (region);
+      //ctx . clip (region);
     }
     ctx . translate (this . left_margin * length, 0);
     for (var bm in this . backMarkings) {ctx . save (); this . backMarkings [bm] . draw (ctx, sliderule); ctx . restore ();}
@@ -2316,7 +2318,7 @@ var Sliderule = function (length, options) {
     // CURSOR
     ctx . beginPath ();
     var le = - this . length * this . cursor_left_extension; var re = this . length * this . cursor_right_extension;
-    roundRect (ctx, le, le, - this . cursor_rounding - this . cursor_top_margin, re, re, this . height () + this . cursor_rounding + this . cursor_bottom_margin, this . cursor_rounding);
+    //roundRect (ctx, le, le, - this . cursor_rounding - this . cursor_top_margin, re, re, this . height () + this . cursor_rounding + this . cursor_bottom_margin, this . cursor_rounding);
     if (this . cursorGlass) {ctx . fillStyle = this . cursorGlass; ctx . fill ();}
     if (this . cursorFrame) {ctx . strokeStyle = this . cursorFrame; ctx . stroke ();}
     if (this . cursorHairline) {
@@ -2470,7 +2472,7 @@ var Sliderule = function (length, options) {
 
 var Sliderules = function (options) {
   this . requireRedraw = true;
-  this . position = {x: 32.5, y: 32.5};
+  this . position = {x: 20, y: 0};
   this . scale = 1; this . scaling_factor = Math . pow (2, 1 / 12);
   this . background_translation = {x: 0, y: 0};
   this . sliderules = [];
