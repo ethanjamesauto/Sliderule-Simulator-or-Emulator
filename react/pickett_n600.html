@@ -28,22 +28,14 @@
     <title>Pickett N600-ES Apollo 11 mission</title>
     <link rel="shortcut icon" type="image/x-icon" href="../h.ico"/>
   </head>
-<body background="apollo-11.jpg" style="background-size: cover;" onkeydown = "javascript: ProcessKey (event);">
+<body style="background-color: #aaaaaa;" onkeydown = "javascript: ProcessKey (event);">
 
 <div align="right">
 	<font color="yellow">
 	<input type = checkbox id = on_hairline onchange = "javascript: changeMarkings ('hairline', this . checked);" />Markings.
-	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front'); document . body . style . backgroundImage = this . checked ? 'url(\'./Buzz.png\')' : 'url(\'./apollo-11.jpg\')';" />Other side.
+	<input type = checkbox id = other_side onchange = "javascript: changeSide (this . checked ? 'back' : 'front');" />Other side.
   </font>
 </div>
-
-<div style="position: absolute; top: 360px; left: 10px; z-index: -1; background-image: url('Buzz_Aldrin.jpg'); background-size: 400px;"/><br/><br/><br/><br/><br/><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Buzz_Aldrin_Autograph.png" width="300px"/></div>
-
-<div style="position: absolute; top: 360px; right: 10px; z-index: -2; color: yellow; font-family: arial; font-style: italic; text-indent: 50px; width: 300px;">
-<p>The above replica of<br/><b>Pickett N600-ES Log Log Duplex</b><br/>(Made in USA) was taken to the moon by astronaut Buzz Aldrin on July 20, 1969.</p>
-<p>It was used for last-minute calculations before landing.</p>
-</div>
-
 
 <div id="root"></div>
 
@@ -51,6 +43,7 @@
 <script src="scales.js"></script>
 <script src="folded_scales.js"></script>
 <script src="sliderule_ctrl.js"></script>
+<script src="../canvas2svg/canvas2svg.js"></script>
 
 <script>
 
@@ -60,7 +53,9 @@ var logo = new Image (); logo . src = 'Pickett_logo_triangle.png'; logo . onload
 var sliderules = new Sliderules ();
 
 var s = new Sliderule (1000, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0.006, cursor_limit_right: 0.006, cursorHairline: 'black'}); sliderules . sliderules . push (s);
-s . braces . push (new BraceSupport (0.011, 1, 73, 60, 8, 'silver', 'black'));
+s.cursorHairline = null;
+
+/*s . braces . push (new BraceSupport (0.011, 1, 73, 60, 8, 'silver', 'black'));
 s . braces . push (new BraceSupport (0.011, 177, 249, 60, 8, 'silver', 'black'));
 s . braces . push (new BraceSupport (1.189, 1, 73, 60, 8, 'silver', 'black'));
 s . braces . push (new BraceSupport (1.189, 177, 249, 60, 8, 'silver', 'black'));
@@ -74,7 +69,7 @@ s . braces . push (new Bolt (1.189, 230, 8, '#eeeeee', '#666666'));
 s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
 s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
 s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
-s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));*/
 
 var r = new Rule ({left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('LL\u2081', '14px arial', 'right', 'black', -0.02, 30));
@@ -119,7 +114,7 @@ r . scales . push (new spacer (2));
 // OTHER SIDE //
 ////////////////
 
-s = new Sliderule (1000, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0.006, cursor_limit_right: 0.006, cursorHairline: 'black'}); sliderules . sliderules . push (s);
+/*s = new Sliderule (1000, {left_margin: 0.1, right_margin: 0.1, cursor_left_extension: 0.05, cursor_right_extension: 0.05, cursor_top_margin: 24, cursor_bottom_margin: 24, cursor_limit_left: 0.006, cursor_limit_right: 0.006, cursorHairline: 'black'}); sliderules . sliderules . push (s);
 s . braces . push (new BraceSupport (0.011, 1, 73, 60, 8, 'silver', 'black'));
 s . braces . push (new BraceSupport (0.011, 177, 249, 60, 8, 'silver', 'black'));
 s . braces . push (new BraceSupport (1.189, 1, 73, 60, 8, 'silver', 'black'));
@@ -136,7 +131,7 @@ s . braces . push (new Bolt (1.189, 250 - 230, 8, '#eeeeee', '#666666'));
 s . cursorGlassBraces . push (new CursorBrace (0.06, 0.06, 26, 0, 16, '#deb887'));
 s . cursorBraces . push (new Screw (0, -13, 12, Math . random () * Math . PI, 'silver', '#666666'));
 s . cursorBraces . push (new Screw (-0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
-s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));
+s . cursorBraces . push (new Screw (0.03, 263, 12, Math . random () * Math . PI, 'silver', '#666666'));*/
 
 var r = new Rule ({left_margin: 0.12, right_margin: 0.12, rule_colour: 'yellow'}); s . rules . push (r);
 r . markings . push (new Engraving ('LL\u2082', '14px arial', 'right', 'black', -0.01, 30));
@@ -189,7 +184,7 @@ changeSide (document . getElementById ('other_side') . checked ? 'back' : 'front
 changeVersion ('german');
 </script>
 
-
+<div class="six columns" id="svg"></div>
 </body>
 </html>
 

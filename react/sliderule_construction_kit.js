@@ -1489,8 +1489,10 @@ var Rule = function (options) {
       ctx . lineWidth = 1;
       var region = new Path2D ();
       roundRect (region, 0, length * (this . left_margin - this . alt_left_margin), 0, (1 + this . left_margin + this . right_margin) * length, (1 + this . left_margin + this . alt_right_margin) * length, this . ruleRealHeight (), this . rounding);
-      ctx . fill (region); ctx . strokeStyle = this . border_colour; ctx . stroke (region);
-      ctx . clip (region);
+      //ctx . closePath ();
+      //ctx . fill (region); ctx . strokeStyle = this . border_colour; 
+      ctx . stroke (region);
+      //ctx . clip (region);
     }
     ctx . translate (this . left_margin * length, 0);
     for (var bm in this . backMarkings) {ctx . save (); this . backMarkings [bm] . draw (ctx, sliderule); ctx . restore ();}

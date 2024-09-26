@@ -243,7 +243,7 @@ var drawSliderule = function () {
 
 	ctx.clearRect(0, 0, new_width, new_height) ;
 	var c2s = new C2S(new_width, new_height);
-	var svg = document.getElementById("svg-root");
+	var svg = document.getElementById("svg");
 
 	if (svg.children.length > 0) {
 		svg.removeChild(svg.children[0]);
